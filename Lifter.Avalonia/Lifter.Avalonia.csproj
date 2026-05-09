@@ -8,20 +8,18 @@
 
     <!-- NuGet package metadata -->
     <PackageId>Lifter.Avalonia</PackageId>
-    <Version>2.0.0</Version>
+    <Version>2.0.1</Version>
     <Authors>Luca Fabbri</Authors>
     <PackageContact>lucafabbri84@live.it</PackageContact>
     <Copyright>Copyright (c) Luca Fabbri 2026</Copyright>
-    <Description>
-      Avalonia UI integration for Lifter. This package provides a HostedApplication base class 
-      with dependency injection, configuration, and IHostedService support for Avalonia applications.
-    </Description>
+    <Description>Avalonia UI 12 integration for Lifter. Provides HostedApplication base class with DI, configuration, IHostedService lifecycle, and AvaloniaDialogService with full virtual override points.</Description>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/lucafabbri/Lifter</PackageProjectUrl>
     <RepositoryUrl>https://github.com/lucafabbri/Lifter</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageTags>avalonia;hostedservices;hosting;di;configuration;lifter</PackageTags>
-    <PackageReleaseNotes>Initial release.</PackageReleaseNotes>
+    <PackageTags>avalonia;avalonia12;hostedservices;hosting;di;configuration;lifter;dialog</PackageTags>
+    <PackageReleaseNotes>v2.0.1: Added NuGet README files for all packages. v2.0.0: Migrated to .NET 10 and Avalonia 12; replaced Avalonia.Diagnostics with ProDiagnostics; added AvaloniaDialogService.</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)'=='Release'">
@@ -30,6 +28,10 @@
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />

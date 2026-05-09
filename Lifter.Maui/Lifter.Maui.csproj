@@ -10,20 +10,18 @@
 
     <!-- Metadati per il pacchetto NuGet -->
     <PackageId>Lifter.Maui</PackageId>
-    <Version>2.0.0</Version>
+    <Version>2.0.1</Version>
     <Authors>Luca Fabbri</Authors>
     <PackageContact>lucafabbri84@live.it</PackageContact>
     <Copyright>Copyright (c) Luca Fabbri 2026</Copyright>
-    <Description>
-      .NET MAUI integration for Lifter. This package enables IHostedService support in .NET MAUI applications,
-      allowing for long-running background tasks managed by the app lifecycle.
-    </Description>
+    <Description>.NET MAUI integration for Lifter. Provides IHostedService lifecycle management tied to the MAUI app lifecycle and MauiDialogService using Page.DisplayAlert, with virtual override points.</Description>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/lucafabbri/Lifter</PackageProjectUrl>
     <RepositoryUrl>https://github.com/lucafabbri/Lifter</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageTags>maui;hostedservices;background;service;host;lifter</PackageTags>
-    <PackageReleaseNotes>Initial release.</PackageReleaseNotes>
+    <PackageTags>maui;hostedservices;background;service;host;lifter;dialog</PackageTags>
+    <PackageReleaseNotes>v2.0.1: Added NuGet README files for all packages. v2.0.0: Migrated to .NET 10; added MauiDialogService.</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)'=='Release'">
@@ -32,6 +30,10 @@
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />

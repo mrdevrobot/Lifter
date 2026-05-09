@@ -8,19 +8,18 @@
 
     <!-- Metadati per il pacchetto NuGet -->
     <PackageId>Lifter.Core</PackageId>
-    <Version>2.0.0</Version>
+    <Version>2.0.1</Version>
     <Authors>Luca Fabbri</Authors>
     <PackageContact>lucafabbri84@live.it</PackageContact>
     <Copyright>Copyright (c) Luca Fabbri 2026</Copyright>
-    <Description>
-      Core components for Lifter, a library to manage and monitor IHostedService instances in .NET applications.
-    </Description>
+    <Description>Platform-agnostic core library for Lifter. Provides HostManager, WatchDog service monitoring, and the IDialogService cross-platform dialog abstraction.</Description>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/lucafabbri/Lifter</PackageProjectUrl>
     <RepositoryUrl>https://github.com/lucafabbri/Lifter</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageTags>hostedservices;background;service;host;lifter;core</PackageTags>
-    <PackageReleaseNotes>Initial release.</PackageReleaseNotes>
+    <PackageTags>hostedservices;background;service;host;lifter;core;dialog;watchdog</PackageTags>
+    <PackageReleaseNotes>v2.0.1: Added NuGet README files for all packages. v2.0.0: Migrated to .NET 10; added IDialogService abstraction with NullDialogService, DialogResult, DialogButton, DialogButtonSet, DialogOptions.</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)'=='Release'">
@@ -29,6 +28,10 @@
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
