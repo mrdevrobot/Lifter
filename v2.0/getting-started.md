@@ -3,7 +3,7 @@ layout: default
 title: Getting Started
 nav_order: 2
 description: "Get started with Lifter"
-permalink: /latest/getting-started
+permalink: /v2.0/getting-started
 ---
 
 # Getting Started
@@ -25,9 +25,9 @@ Lifter is an ecosystem of .NET libraries that brings **`IHostedService`** suppor
 
 | Platform | Package | Use Case |
 |:---------|:--------|:---------|
-| .NET MAUI | [Lifter.Maui](/Lifter/latest/packages/maui) | Mobile and desktop apps (iOS, Android, Windows, macOS) |
-| Avalonia UI | [Lifter.Avalonia](/Lifter/latest/packages/avalonia) | Cross-platform desktop apps with HostedApplication |
-| Blazor WASM | [Lifter.Blazor](/Lifter/latest/packages/blazor) | Browser-based applications |
+| .NET MAUI | [Lifter.Maui](/Lifter/v2.0/packages/maui) | Mobile and desktop apps (iOS, Android, Windows, macOS) |
+| Avalonia UI | [Lifter.Avalonia](/Lifter/v2.0/packages/avalonia) | Cross-platform desktop apps with HostedApplication |
+| Blazor WASM | [Lifter.Blazor](/Lifter/v2.0/packages/blazor) | Browser-based applications |
 
 ---
 
@@ -123,9 +123,9 @@ await builder.Build().RunAsync();
 
 ## Next Steps
 
-- 📚 [Read platform-specific guides](/Lifter/latest/packages/core)
-- ⚙️ [Learn about the WatchDog service](/Lifter/latest/advanced/watchdog)
-- 💡 [Explore examples](/Lifter/latest/examples/maui-webapp)
+- 📚 [Read platform-specific guides](/Lifter/v2.0/packages/core)
+- ⚙️ [Learn about the WatchDog service](/Lifter/v2.0/advanced/watchdog)
+- 💡 [Explore examples](/Lifter/v2.0/examples/maui-webapp)
 
 ---
 

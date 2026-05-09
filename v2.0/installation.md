@@ -3,7 +3,7 @@ layout: default
 title: Installation
 nav_order: 3
 description: "Installation guide for Lifter packages"
-permalink: /latest/installation
+permalink: /v2.0/installation
 ---
 
 # Installation
@@ -259,6 +259,6 @@ dotnet new install Avalonia.Templates
 
 ## Next Steps
 
-- 📖 [Read platform-specific guides](/Lifter/latest/packages/core)
-- ⚙️ [Configure the WatchDog](/Lifter/latest/advanced/watchdog)
-- 💡 [See examples](/Lifter/latest/examples/maui-webapp)
+- 📖 [Read platform-specific guides](/Lifter/v2.0/packages/core)
+- ⚙️ [Configure the WatchDog](/Lifter/v2.0/advanced/watchdog)
+- 💡 [See examples](/Lifter/v2.0/examples/maui-webapp)
