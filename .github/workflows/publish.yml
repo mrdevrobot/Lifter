@@ -23,11 +23,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # 2. Setup .NET SDK 9.x (supports both net8.0 and net9.0 targets)
+      # 2. Setup .NET SDK 10.x
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: 9.0.x
+          dotnet-version: 10.0.x
 
       # 3. Extract version from tag or manual input
       - name: Extract version
