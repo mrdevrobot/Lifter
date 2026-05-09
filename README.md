@@ -28,18 +28,19 @@ Our first offering, which brings `IHostedService` support to modern UI framework
   * Configurable startup policies (Automatic/Manual).
   * Resilient restart policies (Automatic with attempt limits/Manual).
   * Real-time status monitoring and state-change notifications.
+* **`IDialogService` Abstraction**: A cross-platform dialog service with platform-native implementations for Avalonia, Blazor, and MAUI. Show messages, confirmations, and custom dialogs with a unified API — and override any part for custom UI.
 * **Thread-Safe by Design**: The WatchDog service is built with concurrency in mind, ensuring safe management of services even in complex multi-threaded scenarios.
 * **Platform Agnostic Core**: `Lifter.Core` contains all the main logic and has no dependencies on any specific UI framework, making it extensible for future integrations.
 * **Lightweight and Unobtrusive**: Lifter integrates cleanly into your application's startup process without imposing a heavy framework.
 
 ## 📦 Packages in the Ecosystem
 
-| Package                     | Version | Description                                                                                                 |
-| :-------------------------- | :------ | :---------------------------------------------------------------------------------------------------------- |
-| **`Lifter.Core`**           | [![NuGet](https://img.shields.io/nuget/v/Lifter.Core.svg)](https://www.nuget.org/packages/Lifter.Core/) | The core library containing the `HostManager` and the advanced `WatchDog` service. Platform-agnostic.       |
-| **`Lifter.Maui`**           | [![NuGet](https://img.shields.io/nuget/v/Lifter.Maui.svg)](https://www.nuget.org/packages/Lifter.Maui/) | The integration layer for .NET MAUI. It connects the core logic to the MAUI application lifecycle.          |
-| **`Lifter.Avalonia`** ⭐ NEW | [![NuGet](https://img.shields.io/nuget/v/Lifter.Avalonia.svg)](https://www.nuget.org/packages/Lifter.Avalonia/) | Avalonia UI integration with `HostedApplication` base class, dependency injection, and configuration support. |
-| **`Lifter.Blazor`**         | [![NuGet](https://img.shields.io/nuget/v/Lifter.Blazor.svg)](https://www.nuget.org/packages/Lifter.Blazor/) | The integration layer for Blazor WebAssembly. It connects the core logic to the Blazor component lifecycle. |
+| Package             | Version | Description |
+| :------------------ | :------ | :---------- |
+| **`Lifter.Core`**   | [![NuGet](https://img.shields.io/nuget/v/Lifter.Core.svg)](https://www.nuget.org/packages/Lifter.Core/) | Core library: `HostManager`, `WatchDog`, and `IDialogService` abstractions. Platform-agnostic. |
+| **`Lifter.Maui`**   | [![NuGet](https://img.shields.io/nuget/v/Lifter.Maui.svg)](https://www.nuget.org/packages/Lifter.Maui/) | .NET MAUI integration layer — `IHostedService` lifecycle + `MauiDialogService`. |
+| **`Lifter.Avalonia`** | [![NuGet](https://img.shields.io/nuget/v/Lifter.Avalonia.svg)](https://www.nuget.org/packages/Lifter.Avalonia/) | Avalonia UI 12 integration — `HostedApplication` base class + `AvaloniaDialogService`. |
+| **`Lifter.Blazor`** | [![NuGet](https://img.shields.io/nuget/v/Lifter.Blazor.svg)](https://www.nuget.org/packages/Lifter.Blazor/) | Blazor WebAssembly integration — `IHostedService` lifecycle + `BlazorDialogService`. |
 
 📚 **[Read the full documentation →](https://lucafabbri.github.io/Lifter/latest/getting-started)**
 
@@ -343,7 +344,78 @@ _watchDog.StatusChanged += (state) =>
 }
 ```
 
-## 🤝 How to Contribute
+## � IDialogService — Cross-Platform Dialogs
+
+Lifter 2.0 introduces `IDialogService`, a unified dialog abstraction that works identically across Avalonia, Blazor, and MAUI.
+
+### Register
+
+```csharp
+// Avalonia (in ConfigureServices)
+services.AddAvaloniaDialogService();
+
+// Blazor (in Program.cs)
+builder.Services.AddBlazorDialogService();
+
+// MAUI (in MauiProgram.cs)
+builder.AddMauiDialogService();
+```
+
+### Use
+
+```csharp
+// Inject anywhere via DI
+public class MyViewModel(IDialogService dialogs)
+{
+    public async Task ConfirmDeleteAsync()
+    {
+        var result = await dialogs.ShowConfirmAsync(
+            "Delete item",
+            "Are you sure you want to delete this item?",
+            new DialogOptions { ButtonSet = DialogButtonSet.YesNo });
+
+        if (result.Confirmed)
+        {
+            // proceed with delete
+        }
+    }
+}
+```
+
+### Override
+
+Each platform implementation is fully virtual. Subclass and register your override:
+
+```csharp
+// Custom Avalonia dialog with your own Window styling
+public class MyDialogService : AvaloniaDialogService
+{
+    protected override Window BuildDialogWindow(string title, DialogOptions options)
+    {
+        var win = base.BuildDialogWindow(title, options);
+        win.Background = Brushes.DarkSlateBlue;
+        return win;
+    }
+}
+
+// Register the custom implementation
+services.AddAvaloniaDialogService<MyDialogService>();
+```
+
+### DialogResult values
+
+| Static property | `Button` | `Confirmed` |
+|:----------------|:---------|:------------|
+| `DialogResult.Ok` | `Ok` | `true` |
+| `DialogResult.Yes` | `Yes` | `true` |
+| `DialogResult.Cancel` | `Cancel` | `false` |
+| `DialogResult.No` | `No` | `false` |
+| `DialogResult.Close` | `Close` | `false` |
+| `DialogResult.None` | `None` | `false` |
+
+---
+
+## �🤝 How to Contribute
 
 We welcome contributions from the community! Whether it's a bug fix, a new feature, or a documentation improvement, your help is greatly appreciated.
 

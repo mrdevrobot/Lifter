@@ -16,6 +16,7 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.
 builder.Services.AddBootstrapBlazor();
 
 builder.Services.AddLifter();
+builder.Services.AddBlazorDialogService();
 
 builder.Services.AddSingleton<SharedStateService>();
 

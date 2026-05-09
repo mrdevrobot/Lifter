@@ -1,3 +1,4 @@
+using Lifter.Core.Dialog;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Lifter.Avalonia;
@@ -10,20 +11,6 @@ public static class ServiceCollectionExtensions
     /// <summary>
     /// Configures desktop window settings for the application.
     /// </summary>
-    /// <param name="services">The service collection.</param>
-    /// <param name="configure">An action to configure the window settings.</param>
-    /// <returns>The service collection for chaining.</returns>
-    /// <example>
-    /// <code>
-    /// services.ConfigureWindow(config =>
-    /// {
-    ///     config.Title = "My Application";
-    ///     config.Width = 1024;
-    ///     config.Height = 768;
-    ///     config.WindowState = WindowState.Normal;
-    /// });
-    /// </code>
-    /// </example>
     public static IServiceCollection ConfigureWindow(
         this IServiceCollection services,
         Action<WindowConfiguration> configure)
@@ -31,6 +18,24 @@ public static class ServiceCollectionExtensions
         var config = new WindowConfiguration();
         configure(config);
         services.AddSingleton(config);
+        return services;
+    }
+
+    /// <summary>
+    /// Registers the default <see cref="AvaloniaDialogService"/> as the <see cref="IDialogService"/>.
+    /// </summary>
+    public static IServiceCollection AddAvaloniaDialogService(this IServiceCollection services)
+        => services.AddAvaloniaDialogService<AvaloniaDialogService>();
+
+    /// <summary>
+    /// Registers a custom <typeparamref name="TDialogService"/> as the <see cref="IDialogService"/>.
+    /// Use this overload to provide your own subclass of <see cref="AvaloniaDialogService"/>.
+    /// </summary>
+    public static IServiceCollection AddAvaloniaDialogService<TDialogService>(
+        this IServiceCollection services)
+        where TDialogService : class, IDialogService
+    {
+        services.AddSingleton<IDialogService, TDialogService>();
         return services;
     }
 }

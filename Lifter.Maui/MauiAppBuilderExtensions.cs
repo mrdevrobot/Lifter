@@ -1,4 +1,6 @@
 using Lifter.Core;
+using Lifter.Core.Dialog;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Maui.LifecycleEvents;
 
 namespace Lifter.Maui;
@@ -54,5 +56,21 @@ public static class MauiAppBuilderExtensions
     {
         HostManager.StopAsync().GetAwaiter().GetResult();
     }
-}
 
+    /// <summary>
+    /// Registers the default <see cref="MauiDialogService"/> as the <see cref="IDialogService"/>.
+    /// </summary>
+    public static MauiAppBuilder AddMauiDialogService(this MauiAppBuilder builder)
+        => builder.AddMauiDialogService<MauiDialogService>();
+
+    /// <summary>
+    /// Registers a custom <typeparamref name="TDialogService"/> as the <see cref="IDialogService"/>.
+    /// Use this overload to provide your own subclass of <see cref="MauiDialogService"/>.
+    /// </summary>
+    public static MauiAppBuilder AddMauiDialogService<TDialogService>(this MauiAppBuilder builder)
+        where TDialogService : class, IDialogService
+    {
+        builder.Services.AddSingleton<IDialogService, TDialogService>();
+        return builder;
+    }
+}

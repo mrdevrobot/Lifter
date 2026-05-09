@@ -64,7 +64,7 @@ public abstract class HostedApplication<TMainView> : global::Avalonia.Applicatio
                 {
                     Content = splashScreenContent,
                     WindowStartupLocation = WindowStartupLocation.CenterScreen,
-                    SystemDecorations = SystemDecorations.None,
+                    WindowDecorations = WindowDecorations.None,
                     SizeToContent = SizeToContent.WidthAndHeight,
                     Title = "Loading..."
                 };

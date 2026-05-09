@@ -1,12 +1,13 @@
 # Lifter.Avalonia
 
-Avalonia UI integration for Lifter, providing `HostedApplication` support with dependency injection, configuration, and IHostedService lifecycle management.
+Avalonia UI 12 integration for Lifter, providing `HostedApplication` support with dependency injection, configuration, `IHostedService` lifecycle management, and the cross-platform `IDialogService`.
 
 ## Features
 
 ✅ **Dependency Injection** - Full `IServiceCollection` and `IServiceProvider` support  
 ✅ **Configuration** - `IConfiguration` with JSON, environment variables, and user secrets  
 ✅ **IHostedService Support** - Background services managed by application lifecycle  
+✅ **IDialogService** - Native Avalonia dialog windows with full override points  
 ✅ **Cross-Platform** - Proper Desktop (Window) and Mobile (SingleView) handling  
 ✅ **Splash Screen** - Optional splash screen during initialization  
 ✅ **Customizable** - Configurable window settings and lifecycle hooks
@@ -128,7 +129,8 @@ services.AddHostedService<DataSyncService>();
 
 - ✅ **Desktop** (Windows, macOS, Linux) - Creates a `Window` with your view
 - ✅ **Mobile** (iOS, Android via .NET MAUI) - Direct view assignment
-- ✅ **.NET 8 and .NET 9** - Multi-targeting support
+- ✅ **.NET 10** — targets `net10.0`
+- ✅ **Avalonia 12.0**
 
 ## How It Works
 
@@ -176,5 +178,66 @@ MIT - See LICENSE file for details
 
 ## Related Packages
 
-- **Lifter.Core** - Core abstractions and HostManager
+- **Lifter.Core** - Core abstractions, `HostManager`, and `IDialogService` interfaces
 - **Lifter.Maui** - .NET MAUI integration for Lifter
+- **Lifter.Blazor** - Blazor WebAssembly integration for Lifter
+
+## IDialogService
+
+`AvaloniaDialogService` shows native Avalonia `Window` dialogs parented to the desktop main window.
+
+### Registration
+
+```csharp
+// In ConfigureServices (App.cs)
+services.AddAvaloniaDialogService();
+```
+
+### Usage
+
+```csharp
+public class MainView : UserControl, IHostedView
+{
+    private readonly IDialogService _dialogs;
+
+    public MainView(IDialogService dialogs)
+    {
+        _dialogs = dialogs;
+    }
+
+    private async Task OnDeleteClicked()
+    {
+        var result = await _dialogs.ShowConfirmAsync(
+            "Delete item",
+            "Are you sure?",
+            new DialogOptions { ButtonSet = DialogButtonSet.YesNo });
+
+        if (result.Confirmed)
+        {
+            // delete logic
+        }
+    }
+}
+```
+
+### Custom Override
+
+Subclass `AvaloniaDialogService` and register it to customise any aspect of the dialog window:
+
+```csharp
+public class MyDialogService : AvaloniaDialogService
+{
+    // Override to change which window owns the dialog
+    protected override Window? GetOwnerWindow() { ... }
+
+    // Override to fully restyle the dialog window
+    protected override Window BuildDialogWindow(string title, DialogOptions options) { ... }
+
+    // Override to change button layout
+    protected override Panel BuildButtonPanel(DialogOptions options,
+        TaskCompletionSource<DialogResult> tcs, Window dialog) { ... }
+}
+
+// Register the custom implementation
+services.AddAvaloniaDialogService<MyDialogService>();
+```

@@ -1,0 +1,84 @@
+@page "/dialogs"
+@using Lifter.Core.Dialog
+@using LifterDialogResult = Lifter.Core.Dialog.DialogResult
+@inject IDialogService DialogService
+
+<PageTitle>Dialog Demo</PageTitle>
+
+<h1 class="mb-3">IDialogService Demo</h1>
+<p class="mb-4">
+    Test the <code>IDialogService</code> abstractions provided by Lifter.
+    The Blazor implementation uses the browser's native <code>alert</code> / <code>confirm</code> APIs.
+    Swap in any modal library by registering a custom <code>IDialogService</code> implementation.
+</p>
+
+@if (_lastResult is not null)
+{
+    <Alert Color="Color.Info" ShowIcon="true" class="mb-4">
+        Last result — button: <strong>@_lastResult.Button</strong> &nbsp;|&nbsp;
+        confirmed: <strong>@_lastResult.Confirmed</strong>
+    </Alert>
+}
+
+<div class="d-flex flex-wrap gap-2 mb-3">
+
+    <Button Color="Color.Primary"
+            Icon="fa-solid fa-comment"
+            IsAsync="true"
+            OnClick="ShowMessageAsync"
+            Text="Message dialog" />
+
+    <Button Color="Color.Secondary"
+            Icon="fa-solid fa-circle-question"
+            IsAsync="true"
+            OnClick="ShowConfirmAsync"
+            Text="Confirm (OK / Cancel)" />
+
+    <Button Color="Color.Warning"
+            Icon="fa-solid fa-triangle-exclamation"
+            IsAsync="true"
+            OnClick="ShowYesNoAsync"
+            Text="Yes / No / Cancel" />
+
+    <Button Color="Color.Success"
+            Icon="fa-solid fa-window-maximize"
+            IsAsync="true"
+            OnClick="ShowCustomAsync"
+            Text="Custom content" />
+
+</div>
+
+@code {
+    private LifterDialogResult? _lastResult;
+
+    private async Task ShowMessageAsync()
+    {
+        _lastResult = await DialogService.ShowMessageAsync(
+            "Hello from Lifter",
+            "This is a message dialog shown via IDialogService.");
+    }
+
+    private async Task ShowConfirmAsync()
+    {
+        _lastResult = await DialogService.ShowConfirmAsync(
+            "Confirm action",
+            "Do you want to proceed?",
+            new DialogOptions { ButtonSet = DialogButtonSet.OkCancel });
+    }
+
+    private async Task ShowYesNoAsync()
+    {
+        _lastResult = await DialogService.ShowConfirmAsync(
+            "Save changes?",
+            "You have unsaved changes. Do you want to save them before closing?",
+            new DialogOptions { ButtonSet = DialogButtonSet.YesNoCancel });
+    }
+
+    private async Task ShowCustomAsync()
+    {
+        _lastResult = await DialogService.ShowAsync(
+            "Custom content",
+            "Imagine a rich Blazor component rendered here (swap in a modal library).",
+            new DialogOptions { ButtonSet = DialogButtonSet.OkCancel });
+    }
+}

@@ -126,3 +126,54 @@ await builder.Build().RunAsync();
 - 📚 [Read platform-specific guides](/Lifter/latest/packages/core)
 - ⚙️ [Learn about the WatchDog service](/Lifter/latest/advanced/watchdog)
 - 💡 [Explore examples](/Lifter/latest/examples/maui-webapp)
+
+---
+
+## IDialogService — Cross-Platform Dialogs
+
+Available on all platforms from **Lifter 2.0**. Register once, use anywhere.
+
+### Registration
+
+```csharp
+// Avalonia — in ConfigureServices
+services.AddAvaloniaDialogService();
+
+// Blazor — in Program.cs
+builder.Services.AddBlazorDialogService();
+
+// MAUI — in MauiProgram.cs
+builder.AddMauiDialogService();
+```
+
+### Basic Usage
+
+```csharp
+// Inject IDialogService into any class or component
+public class MyViewModel(IDialogService dialogs)
+{
+    public async Task GreetAsync()
+    {
+        await dialogs.ShowMessageAsync("Hello", "Welcome to Lifter!");
+    }
+
+    public async Task ConfirmAsync()
+    {
+        var result = await dialogs.ShowConfirmAsync(
+            "Delete",
+            "Are you sure?",
+            new DialogOptions { ButtonSet = DialogButtonSet.YesNo });
+
+        if (result.Confirmed) { /* proceed */ }
+    }
+}
+```
+
+### Custom Implementations
+
+```csharp
+// Subclass the platform implementation and register it
+services.AddAvaloniaDialogService<MyCustomDialogService>();
+builder.Services.AddBlazorDialogService<MyCustomBlazorDialogService>();
+builder.AddMauiDialogService<MyCustomMauiDialogService>();
+```

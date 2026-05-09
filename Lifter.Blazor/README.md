@@ -1,6 +1,6 @@
 ﻿ # Lifter.Blazor
 
-**Advanced `IHostedService` management for Blazor WebAssembly applications.**
+**Advanced `IHostedService` management and cross-platform dialog support for Blazor WebAssembly applications.**
 
 ---
 
@@ -15,6 +15,7 @@ This library is ideal for periodic tasks like polling data from APIs, real-time 
 * **Lifecycle Management**: Automatically starts and stops services along with the Blazor application.
 * **Configurable Policies**: Define startup (`Automatic`/`Manual`) and restart (`OnFailure`) policies for each service.
 * **Control API**: An `IHostManagerWatchDog` interface to monitor status and manually control services from any Razor component.
+* **`IDialogService`**: Browser-native dialogs via JS interop (`alert` / `confirm`) with virtual override points for custom UI.
 * **Simple Integration**: Set it up in two easy steps.
 
 ---
@@ -166,6 +167,65 @@ You can inject `IHostManagerWatchDog` into any component to get the status of yo
         await WatchDog.StartServiceAsync(serviceType);
     }
 }
+```
+
+---
+
+## 🗨️ IDialogService
+
+`BlazorDialogService` uses `IJSRuntime` to invoke the browser's native `alert` and `confirm` dialogs.
+
+### Registration
+
+```csharp
+// Program.cs
+builder.Services.AddBlazorDialogService();
+```
+
+### Usage in a Razor component
+
+```razor
+@inject IDialogService DialogService
+
+<button @onclick="DeleteAsync">Delete</button>
+
+@code {
+    private async Task DeleteAsync()
+    {
+        var result = await DialogService.ShowConfirmAsync(
+            "Delete",
+            "Are you sure you want to delete this item?",
+            new DialogOptions { ButtonSet = DialogButtonSet.YesNo });
+
+        if (result.Confirmed)
+        {
+            // delete
+        }
+    }
+}
+```
+
+> **Note:** `BootstrapBlazor` (and similar libraries) define their own `DialogResult` type. If you use both, add a using alias in your razor file:
+> ```razor
+> @using LifterDialogResult = Lifter.Core.Dialog.DialogResult
+> ```
+
+### Custom Override
+
+```csharp
+public class MyDialogService : BlazorDialogService
+{
+    public MyDialogService(IJSRuntime js) : base(js) { }
+
+    // Replace browser alert/confirm with a custom modal library
+    public override Task<DialogResult> ShowAsync(
+        string title, object? content, DialogOptions? options, CancellationToken ct)
+    {
+        // open your custom modal and return the result
+    }
+}
+
+builder.Services.AddBlazorDialogService<MyDialogService>();
 ```
 
 ---

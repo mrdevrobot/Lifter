@@ -20,8 +20,8 @@ permalink: /latest/installation
 ## Prerequisites
 
 All Lifter packages require:
-- **.NET 8.0** or **.NET 9.0**
-- Your chosen UI framework (MAUI, Avalonia, or Blazor)
+- **.NET 10.0**
+- Your chosen UI framework (MAUI, Avalonia 12, or Blazor)
 
 ---
 
@@ -51,11 +51,11 @@ dotnet add package Lifter.Maui
 
 **Requirements:**
 - .NET MAUI workload installed
-- Target frameworks: `net8.0-*` or `net9.0-*`
+- Target frameworks: `net10.0-*`
 
 **Project file:**
 ```xml
-<TargetFrameworks>net9.0-android;net9.0-ios;net9.0-maccatalyst</TargetFrameworks>
+<TargetFrameworks>net10.0-android;net10.0-ios;net10.0-maccatalyst</TargetFrameworks>
 <UseMaui>true</UseMaui>
 ```
 
@@ -70,13 +70,13 @@ dotnet add package Lifter.Avalonia
 ```
 
 **Requirements:**
-- Avalonia 11.3 or higher
-- Target frameworks: `net8.0` or `net9.0`
+- Avalonia 12.0 or higher
+- Target frameworks: `net10.0`
 
 **Project file:**
 ```xml
-<TargetFramework>net9.0</TargetFramework>
-<PackageReference Include="Avalonia" Version="11.3.*" />
+<TargetFramework>net10.0</TargetFramework>
+<PackageReference Include="Avalonia" Version="12.0.*" />
 ```
 
 ---
@@ -91,12 +91,12 @@ dotnet add package Lifter.Blazor
 
 **Requirements:**
 - Blazor WebAssembly project
-- Target framework: `net9.0`
+- Target framework: `net10.0`
 
 **Project file:**
 ```xml
-<TargetFramework>net9.0</TargetFramework>
-<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="9.0.*" />
+<TargetFramework>net10.0</TargetFramework>
+<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="10.0.*" />
 ```
 
 ---

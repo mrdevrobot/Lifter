@@ -1,9 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <!-- Multi-targeting for .NET MAUI on .NET 9 only -->
-    <!-- Note: net8.0 MAUI workloads (especially iOS) are not reliably available on Linux CI runners -->
-    <TargetFrameworks>net9.0-android;net9.0-ios;net9.0-maccatalyst;net9.0-windows10.0.19041.0</TargetFrameworks>
+    <TargetFrameworks>net10.0-android;net10.0-ios;net10.0-maccatalyst;net10.0-windows10.0.19041.0</TargetFrameworks>
     <UseMaui>true</UseMaui>
     <SingleProject>true</SingleProject>
     <ImplicitUsings>enable</ImplicitUsings>
@@ -12,10 +10,10 @@
 
     <!-- Metadati per il pacchetto NuGet -->
     <PackageId>Lifter.Maui</PackageId>
-    <Version>1.1.0</Version>
+    <Version>2.0.0</Version>
     <Authors>Luca Fabbri</Authors>
     <PackageContact>lucafabbri84@live.it</PackageContact>
-    <Copyright>Copyright (c) Luca Fabbri 2024</Copyright>
+    <Copyright>Copyright (c) Luca Fabbri 2026</Copyright>
     <Description>
       .NET MAUI integration for Lifter. This package enables IHostedService support in .NET MAUI applications,
       allowing for long-running background tasks managed by the app lifecycle.
@@ -44,7 +42,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Update="Microsoft.Maui.Controls" Version="9.0.100" />
+    <PackageReference Update="Microsoft.Maui.Controls" Version="10.0.60" />
   </ItemGroup>
 
   <ItemGroup>
